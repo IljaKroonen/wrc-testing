@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.black_mesa.webots_remote_control.Camera;
+import org.black_mesa.webots_remote_control.remote_object_state.RemoteCameraState;
 
 /**
  * @author Ilja Kroonen
@@ -22,14 +22,15 @@ public class Server {
 					Socket socket = serverSocket.accept();
 					System.out.println("Incoming connection");
 					ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-					Camera camera = new Camera(0, 0, 0, 0, 0, 1, 0);
+					out.writeObject(1);
+					RemoteCameraState camera = new RemoteCameraState(0, 0, 0, 0, 0, 1, 0);
 					System.out.println("Sending camera");
 					out.writeObject(camera);
 					System.out.println("Camera sent");
 					ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 					while (true) {
 						System.out.println("Reading object from the in stream");
-						camera = (Camera) in.readObject();
+						camera = (RemoteCameraState) in.readObject();
 						System.out.println(camera.toString());
 					}
 				} catch (Exception e) {
