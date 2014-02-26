@@ -2,56 +2,37 @@ package org.black_mesa.webots_remote_control.remote_object_state;
 
 import java.io.Serializable;
 
-/**
- * @author Ilja Kroonen
- */
-public class RemoteCameraState implements Cloneable, Serializable {
-	private static final long serialVersionUID = -2000084337375288247L;
-	private double positionX, positionY, positionZ;
-	private double orientationX, orientationY, orientationZ, orientationAngle;
+public class RemoteCameraState implements Serializable {
+	private static final long serialVersionUID = 8377512273594945634L;
+	private final int id;
+	private double[] t;
+	private double[] r;
 
-	public RemoteCameraState(double positionX, double positionY, double positionZ, double orientationX, double orientationY,
-			double orientationZ, double orientationAngle) {
-		this.positionX = positionX;
-		this.positionY = positionY;
-		this.positionZ = positionZ;
-		this.orientationX = orientationX;
-		this.orientationY = orientationY;
-		this.orientationZ = orientationZ;
-		this.orientationAngle = orientationAngle;
+	public RemoteCameraState(int id, double[] translation, double[] rotation) {
+		this.id = id;
+		t = translation.clone();
+		r = rotation.clone();
 	}
 
-	public double getPositionX() {
-		return positionX;
+	public int getId() {
+		return id;
 	}
 
-	public double getPositionY() {
-		return positionY;
+	public RemoteCameraState clone() {
+		return new RemoteCameraState(id, t, r);
 	}
 
-	public double getPositionZ() {
-		return positionZ;
+	public double[] getTranslation() {
+		return t;
 	}
 
-	public double getOrientationX() {
-		return orientationX;
-	}
-
-	public double getOrientationY() {
-		return orientationY;
-	}
-
-	public double getOrientationZ() {
-		return orientationZ;
-	}
-
-	public double getOrientationAngle() {
-		return orientationAngle;
+	public double[] getRotation() {
+		return r;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + positionX + "," + positionY + "," + positionZ + ") ; (" + orientationX + "," + orientationY + ","
-				+ orientationZ + "," + orientationAngle + ")";
+		return "(" + t[0] + "," + t[1] + "," + t[2] + ") ; (" + r[0] + "," + r[1] + "," + r[2] + "," + r[3] + ")";
 	}
+
 }
