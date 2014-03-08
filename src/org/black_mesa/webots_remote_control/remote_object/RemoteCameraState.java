@@ -1,4 +1,4 @@
-package org.black_mesa.webots_remote_control.remote_object_state;
+package org.black_mesa.webots_remote_control.remote_object;
 
 import java.io.Serializable;
 
