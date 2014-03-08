@@ -1,5 +1,6 @@
 package wrc_testing.server;
 
+import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -35,6 +36,8 @@ public class Server {
 			while (true) {
 				try {
 					serverRoutine(serverSocket);
+				} catch (EOFException e) {
+					System.out.println("Client disconnected");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
