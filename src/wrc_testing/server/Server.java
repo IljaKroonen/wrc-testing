@@ -6,16 +6,16 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.black_mesa.webots_remote_control.remote_object.InstructionQueue;
+import org.black_mesa.webots_remote_control.communication_structures.CameraInstructionQueue;
 
 /**
  * @author Ilja Kroonen
  */
 public class Server {
 	// This value must only be assigned ; the object never gets modified
-	private InstructionQueue iQueue;
+	private CameraInstructionQueue iQueue;
 
-	public Server(int port, InstructionQueue initialState) {
+	public Server(int port, CameraInstructionQueue initialState) {
 		iQueue = initialState;
 		new Thread(new Runnable() {
 			@Override
@@ -25,7 +25,7 @@ public class Server {
 		}).start();
 	}
 
-	public InstructionQueue getCamera() {
+	public CameraInstructionQueue getCamera() {
 		return iQueue;
 	}
 
@@ -58,13 +58,13 @@ public class Server {
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		while (true) {
 			System.out.println("Reading object from the in stream");
-			iQueue = (InstructionQueue) in.readObject();
+			iQueue = (CameraInstructionQueue) in.readObject();
 			System.out.println(iQueue.toString());
 		}
 	}
 
 	public static void main(String args[]) {
-		InstructionQueue iState = new InstructionQueue(0);
+		CameraInstructionQueue iState = new CameraInstructionQueue(0);
 		new Server(42511, iState);
 	}
 
