@@ -34,12 +34,12 @@ public class Server {
 	private void startServer() {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
-			System.out.println("Server online on port " + serverSocket.getLocalPort());
+			println("Server online on port " + serverSocket.getLocalPort());
 			while (true) {
 				try {
 					serverRoutine(serverSocket);
 				} catch (EOFException e) {
-					System.out.println("Client disconnected");
+					println("Client disconnected");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -51,18 +51,22 @@ public class Server {
 
 	private void serverRoutine(ServerSocket serverSocket) throws Exception {
 		Socket socket = serverSocket.accept();
-		System.out.println("Incoming connection");
+		println("Incoming connection");
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		out.writeObject(1);
-		System.out.println("Sending camera");
+		println("Sending camera");
 		out.writeObject(iQueue);
-		System.out.println("Camera sent");
+		println("Camera sent");
 		ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 		while (true) {
-			System.out.println("Reading object from the in stream");
+			println("Reading object from the in stream");
 			iQueue = (CameraInstructionQueue) in.readObject();
-			System.out.println(iQueue.toString());
+			println(iQueue.toString());
 		}
+	}
+	
+	private void println(String msg) {
+		System.out.println("Server " + port + ": " + msg);
 	}
 
 	public static void main(String args[]) {
