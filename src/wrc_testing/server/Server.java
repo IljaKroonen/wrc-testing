@@ -64,8 +64,10 @@ public class Server {
 	}
 
 	public static void main(String args[]) {
-		InstructionQueue iState = new InstructionQueue(0);
-		new Server(42511, iState);
+		new Server(42511, new InstructionQueue(0));
+		new Server(42512, new InstructionQueue(0));
+		new Server(42513, new InstructionQueue(0));
+		new Server(42514, new InstructionQueue(0));
 	}
 
 }
