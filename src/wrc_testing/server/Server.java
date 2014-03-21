@@ -14,8 +14,10 @@ import org.black_mesa.webots_remote_control.communication_structures.CameraInstr
 public class Server {
 	// This value must only be assigned ; the object never gets modified
 	private CameraInstructionQueue iQueue;
+	private int port;
 
 	public Server(int port, CameraInstructionQueue initialState) {
+		this.port = port;
 		iQueue = initialState;
 		new Thread(new Runnable() {
 			@Override
@@ -31,7 +33,7 @@ public class Server {
 
 	private void startServer() {
 		try {
-			ServerSocket serverSocket = new ServerSocket(42511);
+			ServerSocket serverSocket = new ServerSocket(port);
 			System.out.println("Server online on port " + serverSocket.getLocalPort());
 			while (true) {
 				try {
